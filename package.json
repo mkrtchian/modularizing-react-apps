@@ -1,11 +1,11 @@
 {
-  "name": "nextjs-template",
+  "name": "modularizing-react-apps",
   "version": "1.0.0",
   "description": "Template for Next.js projects",
-  "homepage": "https://github.com/mkrtchian/nextjs-template#readme",
+  "homepage": "https://github.com/mkrtchian/modularizing-react-apps#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mkrtchian/nextjs-template.git"
+    "url": "git+https://github.com/mkrtchian/modularizing-react-apps.git"
   },
   "keywords": [
     "nextjs",
@@ -14,7 +14,7 @@
   "author": "Roman Mkrtchian",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mkrtchian/nextjs-template/issues"
+    "url": "https://github.com/mkrtchian/modularizing-react-apps/issues"
   },
   "type": "module",
   "engines": {
