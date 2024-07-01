@@ -1,6 +1,6 @@
 "use client";
 
-import { FetchPort } from "../hooks/fetchAdapter";
+import { FetchPort } from "../adapters/fetchAdapter";
 import { usePaymentMethods } from "../hooks/usePaymentMethods";
 import { PaymentMethods } from "./PaymentMethods";
 

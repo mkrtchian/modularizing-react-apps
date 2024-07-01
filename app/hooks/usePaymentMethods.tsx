@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { PaymentMethod } from "../models/PaymentMethod";
 import { RemotePaymentMethod, remotePaymentMethodsSchema } from "../types";
-import { FetchPort } from "./fetchAdapter";
+import { FetchPort } from "../adapters/fetchAdapter";
 
 export function usePaymentMethods(fetchAdapter: FetchPort) {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);

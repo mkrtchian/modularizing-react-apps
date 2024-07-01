@@ -1,15 +1,14 @@
+"use client";
+
 import { Payment } from "./components/Payment";
-import { FetchPort } from "./hooks/fetchAdapter";
 import styles from "./page.module.css";
 
-export default function Home(
-  { fetchAdapter }: { fetchAdapter: FetchPort } = { fetchAdapter: fetch },
-) {
+export default function Home() {
   return (
     <main className={styles.main}>
       <h1>My app</h1>
       <section>
-        <Payment amount={10} fetchAdapter={fetchAdapter} />
+        <Payment amount={10} fetchAdapter={fetch} />
       </section>
     </main>
   );
