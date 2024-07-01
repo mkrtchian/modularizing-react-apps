@@ -1,25 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  RemotePaymentMethod,
-  remotePaymentMethodsSchema,
-} from "../components/Payment";
 import { PaymentMethod } from "../models/PaymentMethod";
+import { RemotePaymentMethod, remotePaymentMethodsSchema } from "../types";
+import { FetchPort } from "./fetchAdapter";
 
-export function usePaymentMethods() {
+export function usePaymentMethods(fetchAdapter: FetchPort) {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
 
   useEffect(() => {
     const fetchPaymentMethods = async () => {
-      const response = await fetch(
+      const response = await fetchAdapter(
         "https://online-ordering.com/api/payment-methods",
       );
       const methods = remotePaymentMethodsSchema.parse(await response.json());
       setPaymentMethods(convertPaymentMethods(methods));
     };
     void fetchPaymentMethods();
-  }, []);
+  }, [fetchAdapter]);
 
   return {
     paymentMethods,
