@@ -1,75 +1,21 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { z } from "zod";
+import { usePaymentMethods } from "./usePaymentMethods";
+import { PaymentMethods } from "./PaymentMethods";
 
-type LocalPaymentMethod = {
-  provider: string;
-  label: string;
-};
-
-const remotePaymentMethodsSchema = z.array(
+export const remotePaymentMethodsSchema = z.array(
   z.object({
     name: z.string(),
   }),
 );
-
-const PaymentMethods = ({
-  paymentMethods,
-}: {
-  paymentMethods: LocalPaymentMethod[];
-}) => (
-  <>
-    {paymentMethods.map((method) => (
-      <label key={method.provider}>
-        <input
-          type="radio"
-          name="payment"
-          value={method.provider}
-          defaultChecked={method.provider === "cash"}
-        />
-        <span>{method.label}</span>
-      </label>
-    ))}
-  </>
-);
+export type RemotePaymentMethod = z.infer<typeof remotePaymentMethodsSchema>[0];
 
 export const Payment = ({ amount }: { amount: number }) => {
   const { paymentMethods } = usePaymentMethods();
   return (
     <div>
       <h3>Payment</h3>
-      <PaymentMethods paymentMethods={paymentMethods} />
+      <PaymentMethods options={paymentMethods} />
       <button>${amount}</button>
     </div>
   );
 };
-
-function usePaymentMethods() {
-  const [paymentMethods, setPaymentMethods] = useState<LocalPaymentMethod[]>(
-    [],
-  );
-
-  useEffect(() => {
-    const fetchPaymentMethods = async () => {
-      const url = "https://online-ordering.com/api/payment-methods";
-      const response = await fetch(url);
-      const methods = remotePaymentMethodsSchema.parse(await response.json());
-      if (methods.length === 0) {
-        setPaymentMethods([]);
-        return;
-      }
-      const extended: LocalPaymentMethod[] = methods.map((method) => ({
-        provider: method.name,
-        label: `Pay with ${method.name}`,
-      }));
-      extended.push({ provider: "cash", label: "Pay in cash" });
-      setPaymentMethods(extended);
-    };
-    void fetchPaymentMethods();
-  }, []);
-
-  return {
-    paymentMethods,
-  };
-}
