@@ -1,13 +1,5 @@
-import { z } from "zod";
-import { usePaymentMethods } from "./usePaymentMethods";
+import { usePaymentMethods } from "../hooks/usePaymentMethods";
 import { PaymentMethods } from "./PaymentMethods";
-
-export const remotePaymentMethodsSchema = z.array(
-  z.object({
-    name: z.string(),
-  }),
-);
-export type RemotePaymentMethod = z.infer<typeof remotePaymentMethodsSchema>[0];
 
 export const Payment = ({ amount }: { amount: number }) => {
   const { paymentMethods } = usePaymentMethods();

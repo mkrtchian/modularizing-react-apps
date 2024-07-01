@@ -1,4 +1,4 @@
-import { RemotePaymentMethod } from "./Payment";
+import { RemotePaymentMethod } from "../types";
 
 export class PaymentMethod {
   constructor(private remotePaymentMethod: RemotePaymentMethod) {}

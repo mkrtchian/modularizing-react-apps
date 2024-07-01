@@ -1,4 +1,4 @@
-import { Payment } from "./Payment";
+import { Payment } from "./components/Payment";
 import styles from "./page.module.css";
 
 export default function Home() {

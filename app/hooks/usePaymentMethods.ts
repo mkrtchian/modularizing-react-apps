@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { RemotePaymentMethod, remotePaymentMethodsSchema } from "./Payment";
-import { PaymentMethod } from "./PaymentMethod";
+import {
+  RemotePaymentMethod,
+  remotePaymentMethodsSchema,
+} from "../components/Payment";
+import { PaymentMethod } from "../models/PaymentMethod";
 
 export function usePaymentMethods() {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
