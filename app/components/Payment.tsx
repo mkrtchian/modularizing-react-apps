@@ -9,12 +9,17 @@ import { DonationCheckbox } from "./DonationCheckbox";
 export const Payment = ({
   amount,
   fetchAdapter,
+  countryCode,
 }: {
   amount: number;
   fetchAdapter: FetchPort;
+  countryCode: string;
 }) => {
   const { paymentMethods } = usePaymentMethods(fetchAdapter);
-  const { total, tip, agreeToDonate, updateAgreeToDonate } = useRoundUp(amount);
+  const { total, tip, agreeToDonate, updateAgreeToDonate } = useRoundUp(
+    amount,
+    countryCode,
+  );
   return (
     <div>
       <h3>Payment</h3>
@@ -22,15 +27,22 @@ export const Payment = ({
       <DonationCheckbox
         onChange={updateAgreeToDonate}
         checked={agreeToDonate}
-        content={formatCheckboxLabel(agreeToDonate, tip)}
+        content={formatCheckboxLabel(agreeToDonate, tip, countryCode)}
       />
-      <button>${total}</button>
+      <button>
+        {countryCode === "JP" ? "¥" : "$"}${total}
+      </button>
     </div>
   );
 };
 
-const formatCheckboxLabel = (agreeToDonate: boolean, tip: number) => {
+const formatCheckboxLabel = (
+  agreeToDonate: boolean,
+  tip: number,
+  countryCode: string,
+) => {
+  const currencySign = countryCode === "JP" ? "¥" : "$";
   return agreeToDonate
     ? "Thanks for your donation."
-    : `I would like to donate $${tip} to charity.`;
+    : `I would like to donate ${currencySign}${tip} to charity.`;
 };

@@ -8,7 +8,7 @@ export default function Home() {
     <main className={styles.main}>
       <h1>My app</h1>
       <section>
-        <Payment amount={10} fetchAdapter={fetch} />
+        <Payment amount={10} fetchAdapter={fetch} countryCode="JP" />
       </section>
     </main>
   );
