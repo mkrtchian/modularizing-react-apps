@@ -1,6 +1,7 @@
 "use client";
 
 import { Payment } from "./components/Payment";
+import { PaymentStrategyJP } from "./models/PaymentStrategy";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -8,7 +9,11 @@ export default function Home() {
     <main className={styles.main}>
       <h1>My app</h1>
       <section>
-        <Payment amount={10} fetchAdapter={fetch} countryCode="JP" />
+        <Payment
+          amount={10}
+          fetchAdapter={fetch}
+          strategy={new PaymentStrategyJP()}
+        />
       </section>
     </main>
   );

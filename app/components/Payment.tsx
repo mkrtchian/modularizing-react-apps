@@ -5,20 +5,21 @@ import { usePaymentMethods } from "../hooks/usePaymentMethods";
 import { PaymentMethods } from "./PaymentMethods";
 import { useRoundUp } from "../hooks/useRoundUp";
 import { DonationCheckbox } from "./DonationCheckbox";
+import { PaymentStrategy } from "../models/PaymentStrategy";
 
 export const Payment = ({
   amount,
   fetchAdapter,
-  countryCode,
+  strategy,
 }: {
   amount: number;
   fetchAdapter: FetchPort;
-  countryCode: string;
+  strategy: PaymentStrategy;
 }) => {
   const { paymentMethods } = usePaymentMethods(fetchAdapter);
   const { total, tip, agreeToDonate, updateAgreeToDonate } = useRoundUp(
     amount,
-    countryCode,
+    strategy,
   );
   return (
     <div>
@@ -27,11 +28,9 @@ export const Payment = ({
       <DonationCheckbox
         onChange={updateAgreeToDonate}
         checked={agreeToDonate}
-        content={formatCheckboxLabel(agreeToDonate, tip, countryCode)}
+        content={formatCheckboxLabel(agreeToDonate, tip, strategy)}
       />
-      <button>
-        {countryCode === "JP" ? "¥" : "$"}${total}
-      </button>
+      <button>{formatButtonLabel(strategy, total)}</button>
     </div>
   );
 };
@@ -39,10 +38,13 @@ export const Payment = ({
 const formatCheckboxLabel = (
   agreeToDonate: boolean,
   tip: number,
-  countryCode: string,
+  strategy: PaymentStrategy,
 ) => {
-  const currencySign = countryCode === "JP" ? "¥" : "$";
   return agreeToDonate
     ? "Thanks for your donation."
-    : `I would like to donate ${currencySign}${tip} to charity.`;
+    : `I would like to donate ${strategy.currencySign}${tip} to charity.`;
+};
+
+const formatButtonLabel = (strategy: PaymentStrategy, total: number) => {
+  return `${strategy.currencySign}${total}`;
 };

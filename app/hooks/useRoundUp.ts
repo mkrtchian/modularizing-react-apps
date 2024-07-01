@@ -1,20 +1,17 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { PaymentStrategy } from "../models/PaymentStrategy";
 
-export const useRoundUp = (amount: number, countryCode: string) => {
+export const useRoundUp = (amount: number, strategy: PaymentStrategy) => {
   const [agreeToDonate, setAgreeToDonate] = useState<boolean>(false);
 
   const { total, tip } = useMemo(
     () => ({
-      total: agreeToDonate
-        ? countryCode === "JP"
-          ? Math.floor(amount / 100 + 1) * 100
-          : Math.floor(amount + 1)
-        : amount,
-      tip: parseFloat((Math.floor(amount + 1) - amount).toPrecision(10)),
+      total: agreeToDonate ? strategy.getRoundUpAmount(amount) : amount,
+      tip: strategy.getTip(amount),
     }),
-    [amount, agreeToDonate, countryCode],
+    [amount, agreeToDonate, strategy],
   );
 
   const updateAgreeToDonate = () => {
