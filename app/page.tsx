@@ -1,9 +1,13 @@
+import { Payment } from "./Payment";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <h1>My app</h1>
+      <section>
+        <Payment amount={10} />
+      </section>
     </main>
   );
 }
