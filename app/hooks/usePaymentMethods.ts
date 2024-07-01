@@ -9,20 +9,23 @@ export function usePaymentMethods(fetchAdapter: FetchPort) {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
 
   useEffect(() => {
-    const fetchPaymentMethods = async () => {
-      const response = await fetchAdapter(
-        "https://online-ordering.com/api/payment-methods",
-      );
-      const methods = remotePaymentMethodsSchema.parse(await response.json());
-      setPaymentMethods(convertPaymentMethods(methods));
-    };
-    void fetchPaymentMethods();
+    void fetchPaymentMethods(fetchAdapter).then((methods) =>
+      setPaymentMethods(methods),
+    );
   }, [fetchAdapter]);
 
   return {
     paymentMethods,
   };
 }
+
+const fetchPaymentMethods = async (fetchAdapter: FetchPort) => {
+  const response = await fetchAdapter(
+    "https://5a2f495fa871f00012678d70.mockapi.io/api/payment-methods?countryCode=AU",
+  );
+  const methods = remotePaymentMethodsSchema.parse(await response.json());
+  return convertPaymentMethods(methods);
+};
 
 function convertPaymentMethods(methods: RemotePaymentMethod[]) {
   if (methods.length === 0) {
