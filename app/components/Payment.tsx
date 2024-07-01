@@ -4,6 +4,7 @@ import { FetchPort } from "../adapters/fetchAdapter";
 import { usePaymentMethods } from "../hooks/usePaymentMethods";
 import { PaymentMethods } from "./PaymentMethods";
 import { useRoundUp } from "../hooks/useRoundUp";
+import { DonationCheckbox } from "./DonationCheckbox";
 
 export const Payment = ({
   amount,
@@ -14,21 +15,15 @@ export const Payment = ({
 }) => {
   const { paymentMethods } = usePaymentMethods(fetchAdapter);
   const { total, tip, agreeToDonate, updateAgreeToDonate } = useRoundUp(amount);
-  const handleChange = () => updateAgreeToDonate();
   return (
     <div>
       <h3>Payment</h3>
       <PaymentMethods options={paymentMethods} />
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            onChange={handleChange}
-            checked={agreeToDonate}
-          />
-          <p>{formatCheckboxLabel(agreeToDonate, tip)}</p>
-        </label>
-      </div>
+      <DonationCheckbox
+        onChange={updateAgreeToDonate}
+        checked={agreeToDonate}
+        content={formatCheckboxLabel(agreeToDonate, tip)}
+      />
       <button>${total}</button>
     </div>
   );
