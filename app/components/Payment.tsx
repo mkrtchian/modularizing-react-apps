@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import { FetchPort } from "../adapters/fetchAdapter";
 import { usePaymentMethods } from "../hooks/usePaymentMethods";
 import { PaymentMethods } from "./PaymentMethods";
+import { useRoundUp } from "../hooks/useRoundUp";
 
 export const Payment = ({
   amount,
@@ -13,15 +13,8 @@ export const Payment = ({
   fetchAdapter: FetchPort;
 }) => {
   const { paymentMethods } = usePaymentMethods(fetchAdapter);
-  const [agreeToDonate, setAgreeToDonate] = useState<boolean>(false);
-  const { total, tip } = useMemo(
-    () => ({
-      total: agreeToDonate ? Math.floor(amount + 1) : amount,
-      tip: parseFloat((Math.floor(amount + 1) - amount).toPrecision(10)),
-    }),
-    [amount, agreeToDonate],
-  );
-  const handleChange = () => setAgreeToDonate(!agreeToDonate);
+  const { total, tip, agreeToDonate, updateAgreeToDonate } = useRoundUp(amount);
+  const handleChange = () => updateAgreeToDonate();
   return (
     <div>
       <h3>Payment</h3>
@@ -33,14 +26,16 @@ export const Payment = ({
             onChange={handleChange}
             checked={agreeToDonate}
           />
-          <p>
-            {agreeToDonate
-              ? "Thanks for your donation."
-              : `I would like to donate $${tip} to charity.`}
-          </p>
+          <p>{formatCheckboxLabel(agreeToDonate, tip)}</p>
         </label>
       </div>
       <button>${total}</button>
     </div>
   );
+};
+
+const formatCheckboxLabel = (agreeToDonate: boolean, tip: number) => {
+  return agreeToDonate
+    ? "Thanks for your donation."
+    : `I would like to donate $${tip} to charity.`;
 };
