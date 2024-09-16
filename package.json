@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "cliui": "^8.0.1",
-    "next": "14.2.8",
+    "next": "14.2.11",
     "react": "^18",
     "react-dom": "^18",
     "yargs": "^17.7.2",
