@@ -38,8 +38,8 @@
   "dependencies": {
     "cliui": "^8.0.1",
     "next": "15.0.4",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^19",
+    "react-dom": "^19",
     "yargs": "^17.7.2",
     "zod": "^3.23.8"
   },
@@ -49,7 +49,7 @@
     "@testing-library/react": "^16.1.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22",
-    "@types/react": "^18",
+    "@types/react": "^19",
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
